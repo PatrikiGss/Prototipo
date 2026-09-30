@@ -35,6 +35,7 @@
   --wrap: 78rem;
   --gutter: clamp(1rem, 4vw, 2rem);
   --header-h: 4.5rem;
+  --ridge-h: clamp(4.5rem, min(11vw, 17vh), 12rem);
   --radius: 2px;
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
@@ -323,7 +324,7 @@ p { text-wrap: pretty; }
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   min-height: clamp(40rem, calc(100svh - var(--header-h)), 54rem);
   overflow: hidden;
   background: var(--pinho-900);
@@ -390,7 +391,8 @@ p { text-wrap: pretty; }
   display: block;
   margin-top: .9rem;
   font-size: var(--step-2);
-  font-weight: 500;
+  font-stretch: var(--semi);
+  font-weight: 600;
   line-height: 1.2;
   color: rgba(255, 255, 255, .88);
 }
@@ -418,7 +420,8 @@ p { text-wrap: pretty; }
   align-items: center;
   column-gap: clamp(1.5rem, 3vw, 2.75rem);
   row-gap: 1.25rem;
-  padding-bottom: clamp(1.75rem, 4vh, 2.75rem);
+  /* pouco respiro: a serra logo abaixo já separa o evento da página */
+  padding-bottom: clamp(.75rem, 2vh, 1.25rem);
 }
 
 .next-event__legend {
@@ -494,7 +497,30 @@ p { text-wrap: pretty; }
   gap: .5rem;
 }
 
-/* entrada única do hero */
+/* Serra do brasão: o verde termina no perfil da montanha nevada, na cor da página,
+   e a primeira seção começa a partir da neve. O recorte (slice) mantém a altura
+   dos picos e, no celular, corta as pontas e deixa o pico principal à vista. */
+.hero__ridge {
+  display: block;
+  width: 100%;
+  height: var(--ridge-h);
+  /* 1px a mais, cortado pelo hero, para não sobrar fio verde sobre a geada */
+  margin-bottom: -1px;
+}
+.hero__ridge-far { fill: var(--pinho); }
+.hero__ridge-near { fill: var(--geada); }
+/* os fios das encostas, em verde sobre a neve, como no desenho do brasão */
+.hero__ridge-snow {
+  fill: none;
+  stroke: var(--pinho);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* a base da serra já dá o respiro: a primeira seção sobe */
+.hero + .section { padding-top: clamp(2.5rem, 5vw, 4.5rem); }
+
+/* entrada única do hero; a serra sobe junto, a camada do fundo por último */
 @media (prefers-reduced-motion: no-preference) {
   .hero__photo { animation: settle 1.8s var(--ease) both; }
   .hero__body > *,
@@ -502,9 +528,14 @@ p { text-wrap: pretty; }
   .hero__lead { animation-delay: .08s; }
   .hero__actions { animation-delay: .16s; }
   .next-event { animation-delay: .3s; }
+  .hero__ridge-near { animation: ridge 1.4s var(--ease) both; }
+  .hero__ridge-far { animation: ridge-far 1.6s .15s var(--ease) both; }
 }
 @keyframes settle { from { transform: scale(1.05); } }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+/* em unidades do viewBox (160 de altura) */
+@keyframes ridge { from { transform: translateY(34px); } }
+@keyframes ridge-far { from { transform: translateY(58px); } }
 
 /* Tablet e celular: sem espaço ao lado da foto, ela vira uma faixa no topo,
    com a atiradora e o prato à vista, e o texto desce para o verde liso,
@@ -557,7 +588,7 @@ p { text-wrap: pretty; }
   .hero__actions .btn { flex: 1 1 auto; }
 
   /* próximo evento: data empilhada numa coluna estreita, para o título caber em duas linhas */
-  .next-event { column-gap: 1.25rem; row-gap: 1rem; padding-bottom: 2.25rem; }
+  .next-event { column-gap: 1.25rem; row-gap: 1rem; padding-bottom: 1rem; }
   .next-event__date { grid-template-columns: auto; align-self: start; }
   .next-event__day { grid-row: auto; margin-bottom: .4rem; font-size: 3.5rem; }
   .next-event__info { padding-left: 1.1rem; }
