@@ -777,7 +777,8 @@ p { text-wrap: pretty; }
     grid-template-columns: 3.75rem minmax(0, 1fr);
     row-gap: .9rem;
   }
-  .fixture__photo { display: none; }
+  .fixture__photo,
+  .fixture__body { grid-column: 2; }
   .fixture__side {
     grid-column: 2;
     flex-direction: row;
@@ -788,6 +789,22 @@ p { text-wrap: pretty; }
     text-align: left;
   }
   .fixture__date span { font-size: 2.25rem; }
+}
+
+/* tablet: o cartaz fica numa coluna estreita ao lado do texto, como no desktop */
+@media (min-width: 720px) and (max-width: 899px) {
+  .fixture { grid-template-columns: 3.75rem 9rem minmax(0, 1fr); }
+  .fixture__photo { grid-row: 1 / span 2; align-self: start; }
+  .fixture__body,
+  .fixture__side { grid-column: 3; }
+}
+
+/* celular: o cartaz vira uma faixa baixa acima do título, só com a modalidade,
+   porque o nome da prova já vem logo abaixo */
+@media (max-width: 719px) {
+  .fixture__photo { aspect-ratio: 16 / 5; }
+  .poster__title { display: none; }
+  .poster__kicker { font-size: .6875rem; }
 }
 
 /* ---------- Faça parte ---------- */
@@ -950,6 +967,30 @@ p { text-wrap: pretty; }
   .about__text { margin-top: .75rem; }
 
   .ranges { grid-template-columns: 1fr; }
+}
+
+/* Celular: pistas em carrossel de arrastar. A faixa vai até a borda da tela e
+   o próximo cartão aparece pela metade, que é o que mostra que dá para arrastar.
+   O fio de cima é desenhado no fundo para não passar da margem como a faixa. */
+@media (max-width: 719px) {
+  .ranges {
+    display: flex;
+    gap: 1rem;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    border-top: 0;
+    background: linear-gradient(var(--linha), var(--linha)) var(--gutter) 0 / calc(100% - var(--gutter) * 2) 1px no-repeat;
+  }
+  .ranges::-webkit-scrollbar { display: none; }
+  .range {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+  }
 }
 
 @media (max-width: 639px) {

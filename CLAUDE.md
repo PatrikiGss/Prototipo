@@ -29,11 +29,13 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
    - Até 899px, a foto vira uma faixa no topo e o texto desce para o verde liso; a primeira linha do nome fica sobre a borda escurecida da foto.
    - Até 639px, o texto de apoio mostra só a primeira frase (a segunda fica em `.hero__lead-more`) e a data do próximo evento fica empilhada.
 2. **Próximas competições** (`#competicoes`): lista de provas, no padrão data | cartaz | texto | status.
-   - O cartaz (`.poster`) é HTML: foto escurecida, filete de ouro em cima, modalidade em ouro e o nome curto da prova em caixa alta condensada. É decorativo (`aria-hidden`) e some até 899px, como a foto que ocupava o lugar.
+   - O cartaz (`.poster`) é HTML: foto escurecida, filete de ouro em cima, modalidade em ouro e o nome curto da prova em caixa alta condensada. É decorativo (`aria-hidden`).
+     - De 720 a 899px, fica numa coluna estreita ao lado do texto.
+     - Até 719px, vira uma faixa baixa acima do título, só com a modalidade: o nome sai porque o título logo abaixo já o repete.
 3. **Faixa "Faça parte"** (`#faca-parte`, verde-escura): dois caminhos lado a lado, "Quero ser atleta (CAC)" e "Quero me filiar ao clube". Os botões ficam alinhados na mesma linha.
 4. **Nossa estrutura** (`#sobre`, no menu aparece como "O clube"), em duas camadas:
    - em cima, foto da sede, texto de abertura, lista de fatos e os botões "Agende uma visita" (leva a `#contato`) e "Estatuto social (PDF)";
-   - embaixo, pista de ar e tiro ao prato em duas colunas iguais, as duas fotos em 4:3.
+   - embaixo, pista de ar e tiro ao prato em duas colunas iguais, as duas fotos em 4:3. Até 719px, viram um carrossel de arrastar, só com CSS (scroll-snap): a faixa vai até a borda da tela e o segundo cartão aparece pela metade.
    - Até 899px, o título abre a seção, antes da foto (áreas da grade em `.about`).
 5. **Últimas notícias** (`#noticias`).
 6. **Galeria** (`#galeria`).
