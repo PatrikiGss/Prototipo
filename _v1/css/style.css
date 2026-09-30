@@ -1,0 +1,19 @@
+body {
+  background-color: #F8FAF8;
+  color: #1a2721;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+.text-balance {
+  text-wrap: balance;
+}
+.glass-nav {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dot-pattern {
+  background-image: radial-gradient(#E5A93C 1px, transparent 1px);
+  background-size: 24px 24px;
+}
