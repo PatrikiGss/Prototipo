@@ -558,7 +558,8 @@ p { text-wrap: pretty; }
 }
 
 .section h2,
-.contact h2 {
+.contact h2,
+.join h2 {
   font-size: var(--step-3);
   font-stretch: var(--condensada);
   font-weight: 750;
@@ -701,6 +702,54 @@ p { text-wrap: pretty; }
   .fixture__date span { font-size: 2.25rem; }
 }
 
+/* ---------- Faça parte ---------- */
+
+.join {
+  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  background: var(--pinho-900);
+  color: var(--branco);
+}
+
+.join__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* o texto ocupa a sobra de altura, para os dois botões ficarem na mesma linha */
+.join__path {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: start;
+  padding-right: clamp(2rem, 5vw, 4.5rem);
+}
+.join__path + .join__path {
+  padding-right: 0;
+  padding-left: clamp(2rem, 5vw, 4.5rem);
+  border-left: 1px solid var(--linha-clara);
+}
+
+.join h2 { color: var(--branco); }
+
+.join p {
+  max-width: 34rem;
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, .78);
+}
+
+.join .btn { margin-top: 1.75rem; }
+
+@media (max-width: 719px) {
+  .join__grid { grid-template-columns: 1fr; }
+  .join__path { padding-right: 0; }
+  .join__path + .join__path {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--linha-clara);
+  }
+}
+
 /* ---------- O clube ---------- */
 
 .about {
@@ -759,10 +808,45 @@ p { text-wrap: pretty; }
   margin-top: 2.25rem;
 }
 
+/* duas colunas iguais, fotos no mesmo tamanho (4:3) */
+.ranges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.5rem, 3vw, 2.5rem);
+  row-gap: 2.5rem;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--linha);
+}
+
+.range img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+/* a foto da pista de ar é retrato: o recorte mantém os alvos e a bancada */
+.range--ar img { object-position: 50% 30%; }
+
+.range h3 {
+  margin-top: 1.25rem;
+  font-size: var(--step-2);
+  font-stretch: var(--semi);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--pinho-900);
+}
+.range p {
+  max-width: 38rem;
+  margin-top: .5rem;
+  color: var(--liquen);
+}
+
 @media (max-width: 899px) {
   .about { grid-template-columns: 1fr; }
   .about__figure img { aspect-ratio: 16 / 10; }
-}
+
+  .ranges { grid-template-columns: 1fr; }}
 
 /* ---------- Notícias ---------- */
 
