@@ -9,10 +9,16 @@ Todo o conteúdo é em português do Brasil.
 - `index.html`: a home, página única com âncoras.
 - `css/style.css`: todo o estilo, com os tokens em `:root` no topo.
 - `js/main.js`: menu mobile, contagem de dias até o próximo evento (`data-countdown`) e destaque no menu da seção visível.
-- `img/`: fotos reais do clube, já otimizadas:
-  - `sede.jpg`: 1200×960, recortada em 5:4.
-  - `pista-de-ar.jpg`: 900×1200, retrato.
-  - `tiro-ao-prato.jpg`: 1024×768.
+- `img/`: todas as fotos são locais e já otimizadas.
+  - Fotos reais do clube:
+    - `sede.jpg`: 1200×960, recortada em 5:4.
+    - `pista-de-ar.jpg`: 900×1200, retrato.
+    - `tiro-ao-prato.jpg`: 1024×768.
+  - Fotos de banco (Unsplash, licença de uso comercial livre, sem crédito obrigatório). Não mostram o clube:
+    - `hero.jpg`: 1920×1080, de William Isted, espelhada para a arma ficar à direita, longe do título.
+    - `noticia-*.jpg`: as três fotos das notícias.
+    - `cartaz-*.jpg`: fundos dos cartazes das competições.
+    - `galeria-*.jpg`: as seis fotos da galeria, a maioria paisagens de serra com araucárias.
 - `_v1/`: versão antiga, feita em Tailwind com outras fontes. Serve só de referência: não editar nem copiar estilos dela.
 
 O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências. Para ver, basta abrir o `index.html` no navegador.
@@ -22,7 +28,8 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 1. **Hero** (`#inicio`): foto, nome em caixa alta condensada e texto de apoio. Na base, a faixa do próximo evento (`#proximo-evento`).
    - Até 899px, a foto vira uma faixa no topo e o texto desce para o verde liso; a primeira linha do nome fica sobre a borda escurecida da foto.
    - Até 639px, o texto de apoio mostra só a primeira frase (a segunda fica em `.hero__lead-more`) e a data do próximo evento fica empilhada.
-2. **Próximas competições** (`#competicoes`): lista de provas, no padrão data | foto | texto | status.
+2. **Próximas competições** (`#competicoes`): lista de provas, no padrão data | cartaz | texto | status.
+   - O cartaz (`.poster`) é HTML: foto escurecida, filete de ouro em cima, modalidade em ouro e o nome curto da prova em caixa alta condensada. É decorativo (`aria-hidden`) e some até 899px, como a foto que ocupava o lugar.
 3. **Faixa "Faça parte"** (`#faca-parte`, verde-escura): dois caminhos lado a lado, "Quero ser atleta (CAC)" e "Quero me filiar ao clube". Os botões ficam alinhados na mesma linha.
 4. **Nossa estrutura** (`#sobre`, no menu aparece como "O clube"), em duas camadas:
    - em cima, foto da sede, texto de abertura, lista de fatos e os botões "Agende uma visita" (leva a `#contato`) e "Estatuto social (PDF)";
@@ -60,7 +67,7 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 
 ## Textos
 
-- Títulos e rótulos com só a primeira letra maiúscula. Caixa alta só no nome do hero, na marca e no lema do rodapé.
+- Títulos e rótulos com só a primeira letra maiúscula. Caixa alta só no nome do hero, na marca, nos cartazes das competições e no lema do rodapé.
 - Botões dizem aonde levam: "Como obter o CR" e "Como se filiar", nunca dois "Saiba mais".
 - Nos textos enviados pelo cliente, fazer só correções (ortografia, pontuação, unidades como "10 m"). Não reescrever.
 - Textos curtos e diretos, sem enchimento nem dados inventados (altitude, número de atletas, "segurança em primeiro lugar", "tradição serrana" etc.).
@@ -77,8 +84,8 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 
 - Todas as provas da lista de competições, as notícias e o próximo evento (18/10/2026).
 - Imagens:
-  - as fotos que vêm de `lh3.googleusercontent.com/aida-public/...` foram geradas por IA e não mostram o clube real;
-  - o brasão no cabeçalho e no rodapé também vem dessa URL, mas é o logo real.
+  - o hero, as notícias, os cartazes e a galeria usam fotos de banco, não do clube. O ideal é trocar por fotos reais, principalmente na galeria ("Momentos do Caminhos da Neve");
+  - o brasão no cabeçalho e no rodapé ainda vem de `lh3.googleusercontent.com/aida-public/...`, mas é o logo real. Vale salvar uma cópia em `img/`.
 - Contatos: telefones, e-mail, endereço (SC-114, km 28) e horário de atendimento.
 - Links apontando para `#`:
   - "Como obter o CR";

@@ -208,24 +208,14 @@ p { text-wrap: pretty; }
 
 .brand__crest { width: auto; height: 2.75rem; }
 
+/* sozinho na linha, o nome sobe de tamanho para ter o mesmo peso do brasão */
 .brand__name {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.1875rem;
+  font-size: 1.5rem;
   font-stretch: var(--condensada);
   font-weight: 750;
   line-height: 1;
   letter-spacing: .01em;
   text-transform: uppercase;
-}
-.brand__name span {
-  margin-top: .25rem;
-  font-size: .8125rem;
-  font-stretch: 100%;
-  font-weight: 450;
-  letter-spacing: 0;
-  text-transform: none;
-  color: rgba(255, 255, 255, .66);
 }
 
 .site-nav ul { display: flex; gap: 1.6rem; }
@@ -363,12 +353,12 @@ p { text-wrap: pretty; }
     linear-gradient(90deg, rgba(14, 44, 34, .9) 0%, rgba(14, 44, 34, .55) 40%, rgba(14, 44, 34, 0) 70%);
 }
 
-/* no desktop a foto começa depois do título, para não cobrir a atiradora */
+/* no desktop a foto começa depois do título, para a arma não ficar atrás do texto */
 @media (min-width: 900px) {
   .hero__photo {
     left: auto;
     width: 72%;
-    object-position: 45% 40%;
+    object-position: 60% 50%;
   }
   .hero::before {
     background:
@@ -376,9 +366,6 @@ p { text-wrap: pretty; }
       linear-gradient(0deg, rgba(14, 44, 34, .98) 0%, rgba(14, 44, 34, .85) 22%, rgba(14, 44, 34, 0) 50%),
       linear-gradient(90deg, var(--pinho-900) 28%, rgba(14, 44, 34, .7) 38%, rgba(14, 44, 34, 0) 58%);
   }
-}
-@media (min-width: 1280px) {
-  .hero__photo { object-position: 58% 40%; }
 }
 
 .hero__body {
@@ -530,7 +517,7 @@ p { text-wrap: pretty; }
   .hero__photo {
     bottom: auto;
     height: var(--foto);
-    object-position: 70% 35%;
+    object-position: 60% 45%;
   }
   /* o verde fica sólido do fim da foto para baixo e cobre a sobra da foto
      durante a entrada animada (scale) */
@@ -662,7 +649,50 @@ p { text-wrap: pretty; }
   object-fit: cover;
   border-radius: var(--radius);
 }
-.fixture__photo--right { object-position: 80% 50%; }
+
+/* cartaz da prova: foto escurecida com modalidade e nome, no espaço da foto */
+.poster {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: .2rem;
+  padding: .65rem .75rem;
+  overflow: hidden;
+  background: var(--pinho-900);
+  color: var(--branco);
+  border-top: 3px solid var(--ouro);
+}
+.poster img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.poster::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(0deg, rgba(14, 44, 34, .92) 20%, rgba(14, 44, 34, .1) 85%);
+}
+.poster__kicker {
+  font-size: .625rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ouro);
+}
+.poster__title {
+  font-size: 1.25rem;
+  font-stretch: var(--condensada);
+  font-weight: 750;
+  line-height: 1;
+  text-transform: uppercase;
+}
 
 .fixture__body h3 {
   font-size: var(--step-1);
@@ -1023,8 +1053,6 @@ p { text-wrap: pretty; }
   height: 100%;
   object-fit: cover;
 }
-.gallery__img--left { object-position: 15% 50%; }
-.gallery__img--right { object-position: 90% 30%; }
 
 .gallery__item figcaption {
   position: absolute;
