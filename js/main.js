@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
   header.querySelectorAll('.site-nav a').forEach((link) => {
     link.addEventListener('click', () => setMenu(false));
   });
+  // O fundo escurecido é o ::after do cabeçalho: o toque nele chega com o próprio header como alvo
+  header.addEventListener('click', (event) => {
+    if (event.target === header) setMenu(false);
+  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && header.classList.contains('is-open')) {
       setMenu(false);

@@ -60,7 +60,10 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  /* clip, não hidden: hidden faria do body um contêiner de rolagem quando o menu trava o html,
+     e o cabeçalho sticky voltaria para o topo da página */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1, h2, h3, p, ul, ol, dl, dd, figure, address { margin: 0; }
@@ -283,9 +286,18 @@ p { text-wrap: pretty; }
     overflow-y: auto;
     background: var(--pinho-900);
     border-top: 1px solid rgba(255, 255, 255, .08);
-    box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, .25);
   }
   .site-header.is-open .site-nav { display: block; }
+
+  /* com o menu aberto a página escurece e para de rolar; um toque no escuro fecha (main.js) */
+  .site-header.is-open::after {
+    content: "";
+    position: fixed;
+    inset: var(--header-h) 0 0 0;
+    z-index: -1;
+    background: rgba(9, 32, 26, .6);
+  }
+  html:has(.site-header.is-open) { overflow: hidden; }
 
   .site-nav ul {
     flex-direction: column;
@@ -306,6 +318,10 @@ p { text-wrap: pretty; }
 }
 
 @media (max-width: 639px) {
+  /* no celular o cabeçalho fixo ocupa menos da tela */
+  :root { --header-h: 4rem; }
+  .brand__crest { height: 2.5rem; }
+
   .site-header__login { display: none; }
   .site-nav__login { display: block; }
   .site-nav__login a { color: var(--ouro); }
@@ -507,12 +523,31 @@ p { text-wrap: pretty; }
 @keyframes settle { from { transform: scale(1.05); } }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
 
+/* Tablet e celular: sem espaço ao lado da foto, ela vira uma faixa no topo,
+   com a atiradora e o prato à vista, e o texto desce para o verde liso,
+   longe do rosto dela. O nome avança sobre a borda da foto e costura as partes. */
 @media (max-width: 899px) {
-  .hero::before {
-    background:
-      linear-gradient(0deg, rgba(14, 44, 34, .98) 0%, rgba(14, 44, 34, .86) 40%, rgba(14, 44, 34, .35) 75%, rgba(14, 44, 34, .6) 100%);
+  .hero {
+    --foto: clamp(15rem, 44svh, 28rem);
+    min-height: 0;
   }
-  .hero__photo { object-position: 38% 30%; }
+  .hero__photo {
+    bottom: auto;
+    height: var(--foto);
+    object-position: 70% 35%;
+  }
+  /* o verde fica sólido do fim da foto para baixo e cobre a sobra da foto
+     durante a entrada animada (scale) */
+  .hero::before {
+    background: linear-gradient(180deg,
+      rgba(14, 44, 34, .55) 0,
+      rgba(14, 44, 34, 0) calc(var(--foto) * .22),
+      rgba(14, 44, 34, 0) calc(var(--foto) * .5),
+      rgba(14, 44, 34, .82) calc(var(--foto) * .8),
+      var(--pinho-900) var(--foto));
+  }
+  /* a primeira linha do nome fica sobre a parte escurecida da foto */
+  .hero__body { padding-top: calc(var(--foto) - var(--step-hero) * 1.05); }
 
   .next-event { grid-template-columns: auto minmax(0, 1fr); }
   .next-event__cta {
@@ -524,12 +559,33 @@ p { text-wrap: pretty; }
   }
 }
 
-@media (max-width: 479px) {
-  .next-event__day { font-size: 3.5rem; }
+/* Celular: textos mais curtos e grupos bem separados */
+@media (max-width: 639px) {
+  .hero__body { padding-bottom: 2.75rem; }
+  .hero__kind { margin-top: .6rem; font-size: 1.375rem; }
+  .hero__lead {
+    margin-top: 1.25rem;
+    font-size: var(--step-0);
+    line-height: 1.55;
+  }
+  /* a lista de pistas se repete em "Nossa estrutura": no celular fica só a frase de abertura */
+  .hero__lead-more { display: none; }
+  .hero__actions { margin-top: 1.75rem; }
+  .hero__actions .btn { flex: 1 1 auto; }
+
+  /* próximo evento: data empilhada numa coluna estreita, para o título caber em duas linhas */
+  .next-event { column-gap: 1.25rem; row-gap: 1rem; padding-bottom: 2.25rem; }
+  .next-event__date { grid-template-columns: auto; align-self: start; }
+  .next-event__day { grid-row: auto; margin-bottom: .4rem; font-size: 3.5rem; }
   .next-event__info { padding-left: 1.1rem; }
   .next-event__title { font-size: 1.375rem; }
-  .next-event__cta .btn { flex: 1 1 100%; }
-  .hero__actions .btn { flex: 1 1 auto; }
+  .next-event__meta { flex-direction: column; gap: .2rem; }
+  .next-event__cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: .75rem;
+    margin-top: .25rem;
+  }
 }
 
 /* ---------- Seções ---------- */
@@ -628,20 +684,24 @@ p { text-wrap: pretty; }
   color: var(--liquen);
 }
 
+/* o fio fica no vão antes de cada item; quando o item quebra para a linha
+   de baixo, o fio cai fora da caixa e o overflow o esconde */
 .fixture__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: .25rem 0;
+  gap: .25rem 1.6rem;
+  overflow: hidden;
   font-size: var(--step--1);
 }
 .fixture__body .fixture__meta { color: var(--grafite); }
-.fixture__meta span:not(:last-child)::after {
+.fixture__meta span { position: relative; }
+.fixture__meta span + span::before {
   content: "";
-  display: inline-block;
+  position: absolute;
+  top: .25em;
+  left: -.8rem;
   width: 1px;
   height: 1em;
-  margin-inline: .8rem;
-  vertical-align: -.15em;
   background: var(--linha);
 }
 
@@ -695,8 +755,10 @@ p { text-wrap: pretty; }
   .fixture__side {
     grid-column: 2;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    column-gap: 1rem;
     text-align: left;
   }
   .fixture__date span { font-size: 2.25rem; }
@@ -752,12 +814,21 @@ p { text-wrap: pretty; }
 
 /* ---------- O clube ---------- */
 
+/* o título é filho direto da grade: no desktop fica acima do texto, ao lado da foto;
+   no celular abre a seção, antes da foto */
 .about {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2.5rem, 6vw, 5.5rem);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "foto titulo"
+    "foto texto";
+  column-gap: clamp(2.5rem, 6vw, 5.5rem);
   align-items: start;
 }
+.about__title { grid-area: titulo; }
+.about__figure { grid-area: foto; }
+.about__text { grid-area: texto; }
 
 .about__figure img {
   width: 100%;
@@ -843,10 +914,23 @@ p { text-wrap: pretty; }
 }
 
 @media (max-width: 899px) {
-  .about { grid-template-columns: 1fr; }
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas: "titulo" "foto" "texto";
+  }
+  .about__figure { margin-top: 1.75rem; }
   .about__figure img { aspect-ratio: 16 / 10; }
+  .about__text { margin-top: .75rem; }
 
-  .ranges { grid-template-columns: 1fr; }}
+  .ranges { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 639px) {
+  .about__text > p { font-size: var(--step-0); }
+  /* botões com a mesma largura: lado a lado se couberem, senão um por linha */
+  .actions .btn { flex: 1 1 auto; }
+}
 
 /* ---------- Notícias ---------- */
 
@@ -961,6 +1045,8 @@ p { text-wrap: pretty; }
 @media (max-width: 719px) {
   .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 10.5rem; }
   .gallery__item--feature { grid-row: span 2; }
+  /* com duas colunas a última foto ficaria sozinha: ela fecha a grade na largura toda */
+  .gallery__item:last-child { grid-column: 1 / -1; }
 }
 
 /* ---------- Contato ---------- */
@@ -983,6 +1069,7 @@ p { text-wrap: pretty; }
   border-top: 1px solid var(--linha);
 }
 .contact-list li {
+  position: relative;
   display: grid;
   grid-template-columns: 1.25rem minmax(0, 1fr);
   gap: 1rem;
@@ -1010,6 +1097,8 @@ p { text-wrap: pretty; }
   text-decoration-thickness: 2px;
 }
 .contact-list__email { overflow-wrap: anywhere; }
+/* a linha toda liga, abre o WhatsApp ou o e-mail: alvo de toque maior no celular */
+.contact-list a::after { content: ""; position: absolute; inset: 0; }
 
 .contact__map {
   overflow: hidden;
@@ -1056,6 +1145,9 @@ p { text-wrap: pretty; }
 @media (max-width: 899px) {
   .contact { grid-template-columns: 1fr; }
 }
+@media (max-width: 479px) {
+  .contact__route .btn { flex: 1 1 100%; }
+}
 
 /* ---------- Rodapé ---------- */
 
@@ -1091,8 +1183,8 @@ p { text-wrap: pretty; }
 .social a {
   display: grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: 1px solid var(--linha-clara);
   border-radius: var(--radius);
   color: var(--branco);
@@ -1114,6 +1206,7 @@ p { text-wrap: pretty; }
   text-transform: uppercase;
   color: var(--ouro);
 }
+.site-footer__motto span { display: inline-block; }
 
 .site-footer__legal {
   display: flex;
@@ -1125,9 +1218,9 @@ p { text-wrap: pretty; }
   color: rgba(255, 255, 255, .5);
 }
 
-@media (max-width: 999px) {
+@media (max-width: 1099px) {
   .site-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 559px) {
+@media (max-width: 479px) {
   .site-footer__grid { grid-template-columns: 1fr; }
 }
