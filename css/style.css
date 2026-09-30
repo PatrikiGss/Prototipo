@@ -506,10 +506,6 @@ p { text-wrap: pretty; }
   align-items: flex-end;
   gap: .5rem;
 }
-.next-event__cta p {
-  font-size: .8125rem;
-  color: rgba(255, 255, 255, .6);
-}
 
 /* entrada única do hero */
 @media (prefers-reduced-motion: no-preference) {
@@ -1134,12 +1130,6 @@ p { text-wrap: pretty; }
   margin-top: .4rem;
   font-size: .9375rem;
   color: rgba(255, 255, 255, .78);
-}
-.contact__route .contact__coords {
-  margin-top: .75rem;
-  font-size: .8125rem;
-  color: rgba(255, 255, 255, .55);
-  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 899px) {

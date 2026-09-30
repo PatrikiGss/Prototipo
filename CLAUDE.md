@@ -63,6 +63,7 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 - Títulos e rótulos com só a primeira letra maiúscula. Caixa alta só no nome do hero, na marca e no lema do rodapé.
 - Botões dizem aonde levam: "Como obter o CR" e "Como se filiar", nunca dois "Saiba mais".
 - Nos textos enviados pelo cliente, fazer só correções (ortografia, pontuação, unidades como "10 m"). Não reescrever.
+- Textos curtos e diretos, sem enchimento nem dados inventados (altitude, número de atletas, "segurança em primeiro lugar", "tradição serrana" etc.).
 
 ## Fatos confirmados pelo clube
 
@@ -74,14 +75,11 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 
 ## Ainda são conteúdo provisório (confirmar antes de publicar)
 
-- Hero:
-  - "1.360 metros de altitude";
-  - "homologação do Exército e da CBTE".
 - Todas as provas da lista de competições, as notícias e o próximo evento (18/10/2026).
 - Imagens:
   - as fotos que vêm de `lh3.googleusercontent.com/aida-public/...` foram geradas por IA e não mostram o clube real;
   - o brasão no cabeçalho e no rodapé também vem dessa URL, mas é o logo real.
-- Contatos: telefones, e-mail, endereço (SC-114, km 28), coordenadas, horário de atendimento e a lista de modalidades do rodapé.
+- Contatos: telefones, e-mail, endereço (SC-114, km 28) e horário de atendimento.
 - Links apontando para `#`:
   - "Como obter o CR";
   - "Como se filiar";
