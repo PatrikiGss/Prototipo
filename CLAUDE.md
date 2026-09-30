@@ -10,6 +10,7 @@ Todo o conteúdo é em português do Brasil.
 - `css/style.css`: todo o estilo, com os tokens em `:root` no topo.
 - `js/main.js`: menu mobile, contagem de dias até o próximo evento (`data-countdown`) e destaque no menu da seção visível.
 - `img/`: todas as fotos são locais e já otimizadas.
+  - `brasao.png`: o brasão real, 512×315 com fundo transparente, usado no cabeçalho e no rodapé.
   - Fotos reais do clube:
     - `sede.jpg`: 1200×960, recortada em 5:4.
     - `pista-de-ar.jpg`: 900×1200, retrato.
@@ -25,7 +26,8 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 
 ## Ordem da home
 
-1. **Hero** (`#inicio`): foto, nome em caixa alta condensada e texto de apoio. Na base, a faixa do próximo evento (`#proximo-evento`).
+1. **Hero** (`#inicio`): foto, nome em caixa alta condensada e texto de apoio. Na base, a faixa do próximo evento (`#proximo-evento`) e, fechando o hero, a serra do brasão (`.hero__ridge`, SVG inline).
+   - A serra é o perfil da montanha do brasão: camada de trás em `--pinho`, a da frente em `--geada` (a cor da página, então a seção seguinte começa "na neve") e os fios das encostas em `--pinho`, como no desenho do brasão. Usa `preserveAspectRatio="xMidYMax slice"`: no celular corta as pontas e mantém o pico principal.
    - Até 899px, a foto vira uma faixa no topo e o texto desce para o verde liso; a primeira linha do nome fica sobre a borda escurecida da foto.
    - Até 639px, o texto de apoio mostra só a primeira frase (a segunda fica em `.hero__lead-more`) e a data do próximo evento fica empilhada.
 2. **Próximas competições** (`#competicoes`): lista de provas, no padrão data | cartaz | texto | status.
@@ -64,7 +66,8 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 - **Seções:** alternam entre fundo `--geada` (`.section`) e branco (`.section--white`). As faixas escuras são o hero, a "Faça parte" e o rodapé.
 - **Ícones:** sprite SVG inline no topo do `index.html`, usado com `<svg class="icon"><use href="#i-nome"/></svg>`.
 - **Classes:** no estilo BEM (`bloco__elemento--variante`). Os comentários do CSS são em português, curtos, e explicam o porquê.
-- **Movimento:** uma única entrada animada, no hero, que respeita `prefers-reduced-motion`. Não espalhar animações nas outras seções.
+- **Elemento marcante:** a serra no fim do hero é o único momento ousado da página. Não repetir a serra (nem outros divisores de seção) no rodapé ou em outras faixas.
+- **Movimento:** uma única entrada animada, no hero (a serra sobe junto), que respeita `prefers-reduced-motion`. Não espalhar animações nas outras seções.
 - **Responsivo:** os pontos de quebra usados são 1099, 899, 719, 639 e 479px. Todo layout novo precisa funcionar em 390px, sem rolagem lateral.
 
 ## Textos
@@ -86,8 +89,7 @@ O site é estático: HTML, CSS e JS puros, sem build, framework ou dependências
 
 - Todas as provas da lista de competições, as notícias e o próximo evento (18/10/2026).
 - Imagens:
-  - o hero, as notícias, os cartazes e a galeria usam fotos de banco, não do clube. O ideal é trocar por fotos reais, principalmente na galeria ("Momentos do Caminhos da Neve");
-  - o brasão no cabeçalho e no rodapé ainda vem de `lh3.googleusercontent.com/aida-public/...`, mas é o logo real. Vale salvar uma cópia em `img/`.
+  - o hero, as notícias, os cartazes e a galeria usam fotos de banco, não do clube. O ideal é trocar por fotos reais, principalmente na galeria ("Momentos do Caminhos da Neve").
 - Contatos: telefones, e-mail, endereço (SC-114, km 28) e horário de atendimento.
 - Links apontando para `#`:
   - "Como obter o CR";
